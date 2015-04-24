@@ -1,6 +1,19 @@
 ghoul
 =====
+###### Not yet working
+
 ghoul is a "native" filesystem abstraction library for PHP. It is not your grandmother's abstraction library.
+
+### Installation
+```php
+composer require falkirks/ghoul
+```
+
+### Setup
+```
+require __DIR__ . '/vendor/autoload.php';
+(new ghoul())->register();
+```
 
 ### What does this do?
 ghoul overrides built-in filesystem methods, so you don't need to change any code.

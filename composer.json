@@ -1,0 +1,11 @@
+{
+    "name": "falkirks/ghoul",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Falkirks",
+            "email": "bpnoreply@gmail.com"
+        }
+    ],
+    "require": {}
+}

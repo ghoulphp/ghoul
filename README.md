@@ -1,19 +1,25 @@
-ghoul
+`ghoul`
 =====
 ###### Not yet working
 
 ghoul is a "native" filesystem abstraction library for PHP. It is not your grandmother's abstraction library.
 
 ### Installation
-```php
-composer require falkirks/ghoul
+```sh
+$ composer require ghoulphp/ghoul
+$ composer require ghoulphp/[adapter-name]
 ```
 
-### Setup
+### Usage
+```php
+(new ghoul)
+    ->with(new MemoryAdapter()) // Attaches a MemoryAdapter to the ghoul instance
+    ->bind() // Filesystem functions now point to this ghoul
+    ->release(); //Filesystem function point to where they last did, in this case their default
 ```
-require __DIR__ . '/vendor/autoload.php';
-(new ghoul())->register();
-```
+
+### Compatibility with flysystem
+flysystem by the PHP league is a far better abstraction library and is backed by many more contributors and experience. For this reason ghoul is built as an extension to it and not as a standalone library. ghoul depends on flysystem and can use all flysystem adapters out of the box. The issue with these adapters is they don't expose all the features needed by ghoul. For this reason ghoul has its own adapter system which extends flysystem's. ghoul adapters allow you to use all filesystem functions.
 
 ### What does this do?
 ghoul overrides built-in filesystem methods, so you don't need to change any code.

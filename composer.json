@@ -7,5 +7,7 @@
             "email": "bpnoreply@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "league/flysystem": "~1.0"
+    }
 }

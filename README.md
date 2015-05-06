@@ -14,9 +14,29 @@ $ composer require ghoulphp/[adapter-name]
 ```php
 (new ghoul)
     ->with(new MemoryAdapter()) // Attaches a MemoryAdapter to the ghoul instance
-    ->bind() // Filesystem functions now point to this ghoul
-    ->release(); //Filesystem function point to where they last did, in this case their default
+    ->bind(); // Filesystem functions now point to this ghoul
+
+file_put_contents("file.txt", "Hello World!"); // Stored in memory
+echo file_get_contents("file.txt"); // Prints "Hello World"
+
+ghoul::halt(true); // Halts and cleans up the active ghoul
 ```
+
+### Binding
+ghoul binding is really simple. Only one instance can be bound at a time and if another instance tries to bind over it, an exception will be thrown. ghoul allows you to manage binding statically or through a ghoul object. Here are some examples.
+
+```php
+$g = new ghoul; // NOT BOUND | NOT STORED
+$g->bind(); // BOUND | STORED
+$g->release(); // NOT BOUND | STORED
+ghoul::resume(); // BOUND | STORED
+ghoul::halt(true); // NOT BOUND | NOT STORED
+```
+
+The two static method control the currently stored object. It is impossible to statically bind a ghoul, you can only halt or resume an already stored instance.
+
+#### Note
+When you release or halt a release ghoul, a reference is still held until another one is bound over it. This will prevent the object from being garbage collected. If you want to ensure speedy garbage collection pass `true` as the first argument to either method. Doing this means you can't call `ghoul::resume()` method, you will be able to call `ghoul->bind()` and bind from scratch/
 
 ### Compatibility with flysystem
 flysystem by the PHP league is a far better abstraction library and is backed by many more contributors and experience. For this reason ghoul is built as an extension to it and not as a standalone library. ghoul depends on flysystem and can use all flysystem adapters out of the box. The issue with these adapters is they don't expose all the features needed by ghoul. For this reason ghoul has its own adapter system which extends flysystem's. ghoul adapters allow you to use all filesystem functions.

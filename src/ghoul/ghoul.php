@@ -31,12 +31,15 @@ class ghoul{
     }
     public function with(AdapterInterface $adapter){
         $this->adapter = $adapter;
+        return $this;
     }
     public function bind($force = false){
         StaticInstance::bindInstance($this, $force);
+        return $this;
     }
     public function release($removeRef = false){
         StaticInstance::releaseInstance($this, $removeRef);
+        return $this;
     }
     public function isBound(){
         return StaticInstance::isInstanceBound($this);

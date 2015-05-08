@@ -41,6 +41,16 @@ When you release or halt a release ghoul, a reference is still held until anothe
 ### Compatibility with flysystem
 flysystem by the PHP league is a far better abstraction library and is backed by many more contributors and experience. For this reason ghoul is built as an extension to it and not as a standalone library. ghoul depends on flysystem and can use all flysystem adapters out of the box. The issue with these adapters is they don't expose all the features needed by ghoul. For this reason ghoul has its own adapter system which extends flysystem's. ghoul adapters allow you to use all filesystem functions.
 
+### Interacting with underlying static management classes
+ghoul has a couple of static classes which do the work to make everything appear non-static from the outside. Interaction with these classes is discouraged and features should be available in a higher level object.
+
+#### `StaticInstance`
+StaticInstance allows for one instance to be "bound" across the entire program. All it does is store that instance and allow setting and getting. Really simple.
+
+#### `MethodRouter`
+MethodRouter statically routes function calls to the currently bound instance. It depends on `StaticInstance` to function, but either one can init the other automatically.
+
+
 ### What does this do?
 ghoul overrides built-in filesystem methods, so you don't need to change any code.
 

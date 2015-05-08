@@ -3,6 +3,7 @@ namespace ghoul\patch;
 
 
 use ghoul\exception\UnknownMethodException;
+use ghoul\exception\UnsupportedFunctionException;
 use ghoul\StaticInstance;
 
 class MethodRouter {
@@ -22,7 +23,12 @@ class MethodRouter {
     }
     public function execute($name, $args){
         if(isset(self::$methodPool[$name]) && StaticInstance::isBound()){
-            self::$methodPool[$name]->execute(StaticInstance::getCurrentInstance()->getAdapter(), $args);
+            if(self::$methodPool[$name]->supportsAdapter(StaticInstance::getCurrentInstance()->getAdapter())) {
+                self::$methodPool[$name]->execute(StaticInstance::getCurrentInstance()->getAdapter(), $args);
+            }
+            else{
+                throw new UnsupportedFunctionException;
+            }
         }
         elseif(isset(self::$savedMethodPool[$name])){
             //TODO call original
